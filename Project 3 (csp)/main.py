@@ -1,4 +1,5 @@
 import numpy as np
+from MRV import mrv
 from puzzle import Puzzle
 
 
@@ -13,7 +14,12 @@ def solve(assignment):
     if assigned_count == puzzle.N*puzzle.M:
         return assignment if puzzle.isAssignmentComplete(assignment) else False
 
-    var = var_selector(assignment)
+    
+    # heuristics
+    var = var_selector(assignment) # simple backtrack
+    # var = mrv(puzzle, assignment)  # MRV heuristic
+
+
     for value in puzzle.domain:
         if puzzle.isConsistent(var, value, assignment):
             assignment[var] = value
