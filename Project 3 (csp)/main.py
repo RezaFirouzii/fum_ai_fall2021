@@ -1,4 +1,5 @@
 import numpy as np
+from puzzle import Puzzle
 
 
 # def isHorizontallyValid(puzzle, i, j, option):
@@ -155,75 +156,34 @@ import numpy as np
 #             row = list(map(int, row.split()))
 #             puzzle.append(row)
 
-#         MRV(puzzle, 0, 0)
+#         solve(puzzle, 0, 0)
 
 
 
 def backtrack_search():
-    assignment = VARS.copy()
+    assignment = puzzle.variables.copy()
     return solve(assignment)
 
 
 def solve(assignment):
 
-    if len(list(filter(lambda x: type(x) is str, assignment.values()))) == n*m:
-        return assignment if isAssignmentComplete(assignment) else False
+    assigned_count = len(list(filter(lambda x: type(x) is str, assignment.values())))
+    if assigned_count == puzzle.N*puzzle.M:
+        return assignment if puzzle.isAssignmentComplete(assignment) else False
 
     var = var_selector(assignment)
-    for value in DOMAIN:
-        if isConsistent(var, value, assignment):
+    for value in puzzle.domain:
+        puzzle.board = assignment.copy()
+        puzzle.print()
+        if puzzle.isConsistent(var, value, assignment):
             assignment[var] = value
             result = solve(assignment)
             if result:
                 return result
 
-        assignment[var] = VARS[var]
+        assignment[var] = puzzle.variables[var]
     
     return False
-
-
-def isAssignmentComplete(assignment):
-    
-    rows_pos_count = [0 for _ in range(n)]
-    rows_neg_count = [0 for _ in range(n)]
-    for row in range(n):
-        for col in range(m):
-            ch = assignment[row, col]
-            if ch == "+":
-                rows_pos_count[row] += 1
-            elif ch == "-":
-                rows_neg_count[row] += 1
-      
-      
-    cols_pos_count = [0 for _ in range(m)]
-    cols_neg_count = [0 for _ in range(m)]
-    for col in range(m):
-        for row in range(n):
-            ch = assignment[row, col]
-            if ch == "+":
-                cols_pos_count[col] += 1
-            elif ch == "-":
-                cols_neg_count[col] += 1
-                  
-      
-    for row in range(n):
-        if row_pos[row] != -1:
-            if rows_pos_count[row] != row_pos[row]:
-                return False
-        if row_neg[row] != -1:
-            if rows_neg_count[row] != row_neg[row]:
-                return False
-              
-      
-    for col in range(m):
-        if col_pos[col] != -1:
-            if cols_pos_count[col] != col_pos[col]:
-                return False
-        if col_neg[col] != -1:
-            if cols_neg_count[col] != col_neg[col]:
-                return False
-                
-    return True
 
 
 
@@ -235,79 +195,12 @@ def var_selector(assignment):
     return None
 
 
-def isConsistent(var, value, assignment):
-    i, j = var
-    
-    row_count = 0
-    col_count = 0
-
-    for x in range(n):
-        if assignment[x, j] == value:
-            col_count += 1
-
-    for y in range(m):
-        if assignment[i, y] == value:
-            row_count += 1
-
-    if value != 'x' and not isNeighbor(i, j, value, assignment):
-        if value == '+' and row_count < row_pos[i] and col_count < col_pos[j]:
-            return True
-        if value == '-' and row_count < row_neg[i] and col_count < col_neg[j]:
-            return True
-
-    elif value == 'x':
-        return True
-
-    return False 
-                
-
-
-def isNeighbor(i, j, pattern, assignment):
-    neighbors = [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]
-    for neighbor in neighbors:
-        if 0 <= neighbor[0] < n and 0 <= neighbor[1] < m and assignment[neighbor] == pattern:
-            return True
-
-    return False
-
-
-
-def print_puzzle(puzzle):
-    for i in range(n):
-        for j in range(m):
-            print(puzzle[i, j], end=" ")
-        print()
-
-
-# transform magnet puzzle problem into a constraint satisfaction problem
-VARS = {}
-DOMAIN = ['+', '-', 'x']
-# constraints:
-# 1. each row has exactly "row_pos" +
-# 2. each row has exactly "row_neg" -
-# 3. each col has exactly "col_pos" +
-# 4. each col has exactly "col_neg" -
-# 5. no adjacent cells have the same value
-
 
 if __name__ == "__main__":
 
-    # Read puzzle
-    with open("input/input1_method1.txt", "r") as f:
-        f = list(f)
-        n, m = map(int, f[0].split())
-        row_pos = list(map(int, f[1].split()))
-        row_neg = list(map(int, f[2].split()))
-        col_pos = list(map(int, f[3].split()))
-        col_neg = list(map(int, f[4].split()))
-
-        for i in range(n):
-            row = list(map(int, f[i+5].split()))
-            for j in range(m):
-                VARS[i, j] = row[j]
-
-    puzzle = backtrack_search()
-    print_puzzle(puzzle)
+    puzzle = Puzzle("input/input3_method1.txt")
+    puzzle.board = backtrack_search()
+    puzzle.print()
 
             
 
