@@ -43,7 +43,7 @@ def var_selector(assignment):
 
 if __name__ == "__main__":
 
-    puzzle = Puzzle("input/input2_method1.txt")
+    puzzle = Puzzle("input/input1_method1.txt")
     puzzle.board = backtrack_search()
     puzzle.print()
 

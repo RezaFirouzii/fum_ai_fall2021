@@ -1,5 +1,6 @@
 # forward checking algorithm for magnet puzzle problem
 
+import AC3
 import MRV
 from puzzle import Puzzle
 
@@ -83,8 +84,11 @@ def var_selector(assignment):
 
 if __name__ == "__main__":
 
-    puzzle = Puzzle("input/input2_method1.txt")
+    puzzle = Puzzle("input/input1_method1.txt")
     assign_variables_domain(puzzle)
+    # AC3.ac3(puzzle)
+    # for var in puzzle.variables:
+    #     print(puzzle.vars_domain[var])
     puzzle.board = backtrack_search()
     puzzle.print()
 

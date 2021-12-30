@@ -1,3 +1,6 @@
+from os import putenv
+
+
 class Puzzle:
 
     def __init__(self, addr):
@@ -70,8 +73,50 @@ class Puzzle:
             if self.col_neg[col] != -1:
                 if cols_neg_count[col] != self.col_neg[col]:
                     return False
-                    
+
+        for row in range(self.N):
+            for col in range(self.M):
+
+                if self.variables[row, col] == 0:
+                    if not self.is_horizontally_valid(row, col, assignment):
+                        return False
+                else:
+                    if not self.is_vertically_valid(row, col, assignment):
+                        return False
+
         return True
+
+
+    def is_horizontally_valid(self, row, col, assignment):
+        
+        value = assignment[row, col]
+        h_neighbors = [(row, col-1), (row, col+1)]
+        
+        for i, j in h_neighbors:
+            if 0 <= i < self.N and 0 <= j < self.M and self.variables[i, j] == 0:
+
+                if value != assignment[i, j] and value != 'x' and assignment[i, j] != 'x':
+                    return True
+                if value == assignment[i, j] == 'x':
+                    return True
+
+        return False
+
+
+    def is_vertically_valid(self, row, col, assignment):
+        value = assignment[row, col]
+        v_neighbors = [(row-1, col), (row+1, col)]
+        
+        for i, j in v_neighbors:
+            if 0 <= i < self.N and 0 <= j < self.M and self.variables[i, j] == 1:
+                
+                if value != assignment[i, j] and value != 'x' and assignment[i, j] != 'x':
+                    return True
+                if value == assignment[i, j] == 'x':
+                    return True
+
+        return False
+
 
         
     def isConsistent(self, var, value, assignment):
@@ -114,7 +159,7 @@ class Puzzle:
         if not self.board:
             print("No solution")
             return
-            
+
         for i in range(self.N):
             for j in range(self.M):
                 print(self.board[i, j], end=" ")
