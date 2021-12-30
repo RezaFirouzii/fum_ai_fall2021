@@ -1,8 +1,3 @@
-'''
-A variable in a CSP is arc-consistent if every value in its domain satisfies the variable’s binary constraints.
-More formally, Xi is arc-consistent with respect to another variable Xj if for every value in the current domain Di there is some value in the domain Dj that satisfies the binary constraint on the arc (Xi,Xj).
-'''
-
 
 '''
 AC3 algorithm:

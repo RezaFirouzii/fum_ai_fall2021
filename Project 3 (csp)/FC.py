@@ -2,6 +2,7 @@
 
 import AC3
 import MRV
+import LCV
 from puzzle import Puzzle
 
 
@@ -23,7 +24,13 @@ def forward_check(assignment):
     var_domain = puzzle.vars_domain[var].copy() # returns specific var domain
 
     # AC3.ac3(puzzle)
+
+    # using forward checking with LCV heuristic:
+    # for value in LCV.lcv(var, assignment, puzzle):
+    
+    # using normal forwad checking
     for value in var_domain:
+
         if puzzle.isConsistent(var, value, assignment) and puzzle.isConsistent(var2, puzzle.REVERSE[value], assignment):
             assignment[var] = value
             assignment[var2] = puzzle.REVERSE[value]

@@ -79,16 +79,6 @@ class Puzzle:
                 if cols_neg_count[col] != self.col_neg[col]:
                     return False
 
-        # for row in range(self.N):
-        #     for col in range(self.M):
-
-        #         if self.variables[row, col] == 0:
-        #             if not self.is_horizontally_valid(row, col, assignment):
-        #                 return False
-        #         else:
-        #             if not self.is_vertically_valid(row, col, assignment):
-        #                 return False
-
         return True
 
 
