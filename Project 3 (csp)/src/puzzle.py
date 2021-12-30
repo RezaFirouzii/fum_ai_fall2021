@@ -1,5 +1,3 @@
-from os import putenv
-
 
 class Puzzle:
 

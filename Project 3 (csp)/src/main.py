@@ -45,7 +45,8 @@ def var_selector(assignment):
 
 if __name__ == "__main__":
 
-    puzzle = Puzzle("input/input2_method2.txt")
+    # change input address for different tests
+    puzzle = Puzzle("input/input1_method2.txt")
     puzzle.board = backtrack_search()
     puzzle.print()
 

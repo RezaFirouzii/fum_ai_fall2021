@@ -23,13 +23,13 @@ def forward_check(assignment):
     var2 = puzzle.get_neighbor(var, puzzle.variables[var])
     var_domain = puzzle.vars_domain[var].copy() # returns specific var domain
 
-    # AC3.ac3(puzzle)
+    AC3.ac3(puzzle)
 
     # using forward checking with LCV heuristic:
-    # for value in LCV.lcv(var, assignment, puzzle):
+    for value in LCV.lcv(var, assignment, puzzle):
     
     # using normal forwad checking
-    for value in var_domain:
+    # for value in var_domain:
 
         if puzzle.isConsistent(var, value, assignment) and puzzle.isConsistent(var2, puzzle.REVERSE[value], assignment):
             assignment[var] = value
@@ -94,7 +94,7 @@ def var_selector(assignment):
 
 if __name__ == "__main__":
 
-    puzzle = Puzzle("input/input1_method2.txt")
+    puzzle = Puzzle("input/input2_method2.txt")
     reset_variables_domain(puzzle)
     puzzle.board = backtrack_search()
     puzzle.print()
