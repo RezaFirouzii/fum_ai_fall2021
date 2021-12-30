@@ -31,7 +31,7 @@ class Puzzle:
     def isAssignmentComplete(self, assignment):
         
         rows_pos_count = [0 for _ in range(self.N)]
-        rows_neg_count = [0 for _ in range(self.M)]
+        rows_neg_count = [0 for _ in range(self.N)]
 
         for row in range(self.N):
             for col in range(self.M):
@@ -111,6 +111,10 @@ class Puzzle:
 
 
     def print(self):
+        if not self.board:
+            print("No solution")
+            return
+            
         for i in range(self.N):
             for j in range(self.M):
                 print(self.board[i, j], end=" ")

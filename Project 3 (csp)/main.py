@@ -1,5 +1,4 @@
-import numpy as np
-from MRV import mrv
+import MRV
 from puzzle import Puzzle
 
 
@@ -16,8 +15,8 @@ def solve(assignment):
 
     
     # heuristics
-    var = var_selector(assignment) # simple backtrack
-    # var = mrv(puzzle, assignment)  # MRV heuristic
+    # var = var_selector(assignment) # simple backtrack
+    var = MRV.mrv(puzzle, assignment)  # MRV heuristic
 
 
     for value in puzzle.domain:
@@ -44,7 +43,7 @@ def var_selector(assignment):
 
 if __name__ == "__main__":
 
-    puzzle = Puzzle("input/input1_method1.txt")
+    puzzle = Puzzle("input/input2_method1.txt")
     puzzle.board = backtrack_search()
     puzzle.print()
 

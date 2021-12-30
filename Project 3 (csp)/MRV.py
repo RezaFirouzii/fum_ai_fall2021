@@ -6,8 +6,9 @@ def mrv(puzzle, assignment):
     # 2. sort the remaining values in ascending order
     
     # find the variable with minimum remaining values
-    min_remaining_values = 99999
+    min_remaining_values = 1e6
     min_remaining_values_var = None
+
     for var in assignment.keys():
         if type(assignment[var]) is int:
             remaining_values = get_legal_values(puzzle, assignment, var)
@@ -16,7 +17,6 @@ def mrv(puzzle, assignment):
                 min_remaining_values_var = var
 
     return min_remaining_values_var
-
 
 
 
