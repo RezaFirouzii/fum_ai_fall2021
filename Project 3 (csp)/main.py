@@ -20,8 +20,10 @@ def solve(assignment):
 
 
     for value in puzzle.domain:
-        if puzzle.isConsistent(var, value, assignment):
+        var2 = puzzle.get_neighbor(var, puzzle.variables[var])
+        if puzzle.isConsistent(var, value, assignment) and puzzle.isConsistent(var2, puzzle.REVERSE[value], assignment):
             assignment[var] = value
+            assignment[var2] = puzzle.REVERSE[value]
             result = solve(assignment)
             if result:
                 return result
@@ -43,7 +45,7 @@ def var_selector(assignment):
 
 if __name__ == "__main__":
 
-    puzzle = Puzzle("input/input1_method1.txt")
+    puzzle = Puzzle("input/input2_method2.txt")
     puzzle.board = backtrack_search()
     puzzle.print()
 

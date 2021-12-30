@@ -43,12 +43,11 @@ def ac3(puzzle):
                     queue.append((Z, X))
 
 
-
 def remove_consistent_values(X, Y, puzzle):
     value_removed = False
     for x in puzzle.vars_domain[X]:
-        if not consistent_values(x, Y, puzzle):
-            print(X, Y, puzzle.vars_domain[X], puzzle.vars_domain[Y])
+        if x != 'x' and not consistent_values(x, Y, puzzle):
+            # print(X, Y, puzzle.vars_domain[X], puzzle.vars_domain[Y])
             puzzle.vars_domain[X].remove(x)
             value_removed = True
 

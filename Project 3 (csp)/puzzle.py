@@ -8,6 +8,11 @@ class Puzzle:
         self.board = {}
         self.variables = {}
         self.domain = ['+', '-', 'x']
+        self.REVERSE = {
+            '+': '-',
+            '-': '+',
+            'x': 'x'
+        }
 
         # Read puzzle
         with open(addr, "r") as f:
@@ -74,15 +79,15 @@ class Puzzle:
                 if cols_neg_count[col] != self.col_neg[col]:
                     return False
 
-        for row in range(self.N):
-            for col in range(self.M):
+        # for row in range(self.N):
+        #     for col in range(self.M):
 
-                if self.variables[row, col] == 0:
-                    if not self.is_horizontally_valid(row, col, assignment):
-                        return False
-                else:
-                    if not self.is_vertically_valid(row, col, assignment):
-                        return False
+        #         if self.variables[row, col] == 0:
+        #             if not self.is_horizontally_valid(row, col, assignment):
+        #                 return False
+        #         else:
+        #             if not self.is_vertically_valid(row, col, assignment):
+        #                 return False
 
         return True
 
@@ -153,6 +158,16 @@ class Puzzle:
                 return True
 
         return False
+
+
+    def get_neighbor(self, var, id):
+        i, j = var
+        neighbors = [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]
+        for neighbor in neighbors:
+            if 0 <= neighbor[0] < self.N and 0 <= neighbor[1] < self.M and self.variables[neighbor] == id:
+                return neighbor
+
+        return None
 
 
     def print(self):

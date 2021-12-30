@@ -19,13 +19,16 @@ def forward_check(assignment):
     
     # var = var_selector(assignment)     # simple backtrack
     var = MRV.mrv(puzzle, assignment)    # MRV heuristic
-    var_domain = puzzle.vars_domain[var] # returns specific var domain
+    var2 = puzzle.get_neighbor(var, puzzle.variables[var])
+    var_domain = puzzle.vars_domain[var].copy() # returns specific var domain
 
+    # AC3.ac3(puzzle)
     for value in var_domain:
-        if puzzle.isConsistent(var, value, assignment):
-            
+        if puzzle.isConsistent(var, value, assignment) and puzzle.isConsistent(var2, puzzle.REVERSE[value], assignment):
             assignment[var] = value
-            if value != 'x' and not valid_neighbors_domain(var, assignment):
+            assignment[var2] = puzzle.REVERSE[value]
+
+            if value != 'x' and not valid_neighbors_domain(var, assignment) and not valid_neighbors_domain(var2, assignment):
                 return False
             result = forward_check(assignment)            
             if result:
@@ -67,7 +70,7 @@ def get_unassigned_neighbors(var, assignment):
 
 
 
-def assign_variables_domain(puzzle):
+def reset_variables_domain(puzzle):
     puzzle.vars_domain = {}
     for var in puzzle.variables:
         puzzle.vars_domain[var] = puzzle.domain.copy()
@@ -84,14 +87,9 @@ def var_selector(assignment):
 
 if __name__ == "__main__":
 
-    puzzle = Puzzle("input/input1_method1.txt")
-    assign_variables_domain(puzzle)
-    # AC3.ac3(puzzle)
-    # for var in puzzle.variables:
-    #     print(puzzle.vars_domain[var])
+    puzzle = Puzzle("input/input1_method2.txt")
+    reset_variables_domain(puzzle)
     puzzle.board = backtrack_search()
     puzzle.print()
 
             
-
-    
