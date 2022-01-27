@@ -1,4 +1,4 @@
-# FUM - Artificial Intelligence Fundumentals Course - Fall 2021
+# FUM - AI Fundumentals Course - Fall 2021
 
 All projects of AI Fundumentals course implementation.
 
